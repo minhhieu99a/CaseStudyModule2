@@ -7,6 +7,7 @@ import storage.HumanFromFileBinary;
 import storage.IHumanData;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static view.Client.*;
@@ -64,6 +65,13 @@ public class HumanManager {
             humanData.writeFile(humanArrayList);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public static void bookTour(){
+        int index = getHumanId();
+        if (humanArrayList.get(index)instanceof Pilot){
+            Pilot pilot = (Pilot) humanArrayList.get(index);
+            if (LocalDate.of(year,month,day))
         }
     }
 }

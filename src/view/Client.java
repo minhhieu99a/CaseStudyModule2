@@ -5,6 +5,7 @@ import model.Human;
 import model.Pilot;
 import model.SugarBaby;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -291,6 +292,30 @@ public class Client {
         SugarBaby editSugarBaby = (SugarBaby) humanArrayListClient.get(index);
         return editSugarBaby;
     }
+    public static void displayPilotOn(){
+        Scanner inputDay= new Scanner(System.in);
+        int day = inputDay.nextInt();
+        Scanner inputMonth= new Scanner(System.in);
+        int month = inputMonth.nextInt();
+        Scanner inputYear= new Scanner(System.in);
+        int year = inputYear.nextInt();
+        Scanner inputDate = new Scanner(System.in);
+        int dateBook = inputDate.nextInt();
+        Scanner inputDayBook= new Scanner(System.in);
+        int dayBook = inputDayBook.nextInt();
+        Scanner inputMonthBook= new Scanner(System.in);
+        int monthBook = inputMonthBook.nextInt();
+        Scanner inputYearBook= new Scanner(System.in);
+        int yearBook = inputYearBook.nextInt();
+        LocalDate datePilotBeginOff =  LocalDate.of(year,month,day);
+        LocalDate datePilotEndOff = datePilotBeginOff.plusDays(dateBook);
+        LocalDate khachMuonBook = LocalDate.of(yearBook,monthBook,yearBook);
+        //checkSTT
+        int index =getHumanId();
+        if (khachMuonBook.isAfter(datePilotBeginOff)&&khachMuonBook.isBefore(datePilotEndOff)){
+            humanArrayListClient.get(index).setStatus("Off");
+        }
+    }
 
     public static void showMenu() {
         int choice = -1;
@@ -316,12 +341,16 @@ public class Client {
                     break;
                 case 3:
                     addNewSugarBaby();
+                    break;
                 case 4:
                     editHumanById();
+                    break;
                 case 5:
                     deleteHuman();
+                    break;
                 case 0:
                     exitSystem();
+                    break;
                 default:
                     System.out.println("Mời bạn nhập lại");
             }

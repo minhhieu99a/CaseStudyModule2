@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class HumanFromFileBinary implements IHumanData {
     public ArrayList<Human> readFile() {
-        File file = new File("heaven1.hieu");
+        File file = new File("heaven.hieu");
         try {
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -28,7 +28,7 @@ public class HumanFromFileBinary implements IHumanData {
     }
 
     public void writeFile(ArrayList<Human> arrayList) throws IOException {
-        File file = new File("heaven1.hieu");
+        File file = new File("heaven.hieu");
         FileOutputStream fos =null;
         ObjectOutputStream oos = null;
         try {
