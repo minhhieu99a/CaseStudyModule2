@@ -17,43 +17,20 @@ public class Client {
 
     public static void main(String[] args) {
         showMenu();
-//        int choice = -1;
-//        Scanner inputChoice = new Scanner(System.in);
-//        while (choice != 0) {
-//            System.out.println("Menu");
-//            System.out.println("1. Hiển thị danh sách thức ăn");
-//            System.out.println("2. Thêm Pilot ");
-//            System.out.println("3. Thêm SGBB");
-//            System.out.println("4. Sửa thông tin hàng theo Id ");
-//            System.out.println("5. Hiển thị lương phải trả cho tất cả các nhân viên bán thời gian");
-//            System.out.println("6. Sắp xếp nhân viên toàn thời gian theo số lương tăng dần");
-//            System.out.println("7. Sửa thông tin nhân viên theo Id");
-//            System.out.println("0. Exit!");
-//            System.out.println("Nhập lựa chọn: ");
-//            choice = inputChoice.nextInt();
-//            switch (choice) {
-//                case 1:
-//                    HumanManager.displayHuman();
-//                    break;
-//                case 2:
-//                    addNewPilot();
-//                    break;
-//                case 3:
-//                    addNewSugarBaby();
-//                case 4:
-//                    editHumanById();
-//                case 0:
-//                    exitSystem();
-//                default:
-//                    System.out.println("Mời bạn nhập lại");
-//            }
-//        }
     }
 
     public static Pilot creatNewPilot() {
         Scanner inputIdPilot = new Scanner(System.in);
         System.out.println("Nhập ID Pilot: ");
         String idPilot = inputIdPilot.nextLine();
+
+        for (int i = 0; i < humanArrayListClient.size(); i++) {
+            if (humanArrayListClient.get(i).getId().equals(idPilot)){
+                System.out.println("Id bạn nhập vào bị trùng . Mời bạn nhập lại. ");
+                Pilot newPilot = creatNewPilot();
+                return newPilot;
+            }
+        }
 
         Scanner inputNamePilot = new Scanner(System.in);
         System.out.println("Nhập tên của Pilot: ");
@@ -89,6 +66,13 @@ public class Client {
         Scanner inputIdSugarBaBy = new Scanner(System.in);
         System.out.println("Nhập ID SugarBaby: ");
         String idSugarBaby = inputIdSugarBaBy.nextLine();
+
+        for (int i = 0; i < humanArrayListClient.size(); i++) {
+            if (humanArrayListClient.get(i).getId()==idSugarBaby){
+               SugarBaby newSugarBaby =  creatNewSugarBaby();
+               return newSugarBaby;
+            }
+        }
 
         Scanner inputNameSugarBaBy = new Scanner(System.in);
         System.out.println("Nhập tên của SugarBaby: ");
@@ -393,6 +377,11 @@ public class Client {
         System.out.println("Lợi nhuận của tháng " + month + "/" + year + " là : " + profitOfMonth);
 
     }
+public static void sortHumanWithSalary (){
+        ArrayList<Human> newHumanArrayList = humanArrayListClient;
+        newHumanArrayList.sort(((o1, o2) -> (int) (o1.getPrice()- o2.getPrice())));
+    display(newHumanArrayList);
+}
 
     public static void showMenu() {
         int choice = -1;
@@ -407,6 +396,7 @@ public class Client {
             System.out.println("6. Book lịch");
             System.out.println("7. Hiển thị lương phải trả theo tháng,năm của nhân viên bằng Id");
             System.out.println("8. Hiển thị lợi nhuận");
+            System.out.println("9. Sắp xếp nhân viên theo giá tăng dần");
             System.out.println("0. Exit!");
             System.out.println("Nhập lựa chọn: ");
             choice = inputChoice.nextInt();
@@ -431,8 +421,13 @@ public class Client {
                     break;
                 case 7:
                     displaySalaryById();
+                    break;
                 case 8 :
                     displayProfit();
+                    break;
+                case 9 :
+                    sortHumanWithSalary();
+                    break;
                 case 0:
                     exitSystem();
                     break;

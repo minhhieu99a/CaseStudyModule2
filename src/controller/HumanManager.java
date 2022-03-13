@@ -16,10 +16,12 @@ public class HumanManager {
     private static IHumanData humanData = new HumanFromFileBinary();
     public static ArrayList<Human> humanArrayList = humanData.readFile();
 
-
-
     public static void displayHuman() {
-        for (Human e : humanArrayList
+        display(humanArrayList);
+    }
+
+    public static void display(ArrayList<Human> arrayList) {
+        for (Human e : arrayList
         ) {
             System.out.println(e);
         }
