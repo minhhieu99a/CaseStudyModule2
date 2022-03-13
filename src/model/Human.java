@@ -1,6 +1,10 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class Human implements Serializable {
     private String id;
@@ -9,19 +13,19 @@ public class Human implements Serializable {
     private Double weight;
     private int age;
     private Double price;
-    private String status;
+    private ArrayList<LocalDate> dates;
 
     public Human() {
     }
 
-    public Human(String id, String fullname, Double height, Double weight, int age, Double price, String status) {
+    public Human(String id, String fullName, Double height, Double weight, int age, Double price,ArrayList<LocalDate> dates) {
         this.id = id;
-        fullName = fullname;
+        this.fullName = fullName;
         this.height = height;
         this.weight = weight;
         this.age = age;
         this.price = price;
-        this.status = status;
+        this.dates = dates;
     }
 
     public String getId() {
@@ -72,24 +76,24 @@ public class Human implements Serializable {
         this.price = price;
     }
 
-    public String getStatus() {
-        return status;
+    public ArrayList<LocalDate> getDates() {
+        return dates;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDates(ArrayList<LocalDate> dates) {
+        this.dates = dates;
     }
 
     @Override
     public String toString() {
         return "Human{" +
-                "Id='" + id + '\'' +
-                ", Fullname='" + fullName + '\'' +
-                ", Height=" + height +
-                ", Weight=" + weight +
-                ", Age=" + age +
-                ", Price=" + price +
-                ", Status='" + status + '\'' +
+                "id='" + id + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", age=" + age +
+                ", price=" + price +
+                ", dates=" + dates +
                 '}';
     }
 }

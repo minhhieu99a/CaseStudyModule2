@@ -7,6 +7,7 @@ import model.SugarBaby;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static controller.HumanManager.*;
@@ -78,11 +79,9 @@ public class Client {
         System.out.println("Nhập tính cách của Pilot : ");
         String nationnalityOfPilot = inputNationnality.nextLine();
 
-        Scanner inputStatus = new Scanner(System.in);
-        System.out.println("Nhập trạng thái hiện tại : ");
-        String statusOfPilot = inputStatus.nextLine();
+        ArrayList<LocalDate> datesOfPilot = new ArrayList<>();
 
-        Pilot newPilot = new Pilot(idPilot, namePilot, heightOfPilot, weightOfPilot, agePilot, priceOfPilot, statusOfPilot, nationnalityOfPilot);
+        Pilot newPilot = new Pilot(idPilot, namePilot, heightOfPilot, weightOfPilot, agePilot, priceOfPilot, datesOfPilot, nationnalityOfPilot);
         return newPilot;
     }
 
@@ -111,9 +110,7 @@ public class Client {
         System.out.println("Nhập giá tour một ngày : ");
         double priceOfSugarBaBy = inputPrice.nextDouble();
 
-        Scanner inputStatus = new Scanner(System.in);
-        System.out.println("Nhập trạng thái hiện tại : ");
-        String statusOfSugarBaBy = inputStatus.nextLine();
+        ArrayList<LocalDate> datesOfSugarBaby = new ArrayList<>();
 
         Scanner inputBust = new Scanner(System.in);
         System.out.println("Nhập vòng 1 của SugarBaby : ");
@@ -127,13 +124,13 @@ public class Client {
         System.out.println("Nhập vòng 3 của SugarBaby : ");
         double hipOfSugarBaBy = inputHip.nextDouble();
 
-        SugarBaby newSugarBaby = new SugarBaby(idSugarBaby, nameSugarBaBy, heightOfSugarBaBy, weightOfSugarBaBy, ageSugarBaBy, priceOfSugarBaBy, statusOfSugarBaBy, bustOfSugarBaBy, waistOfSugarBaBy, hipOfSugarBaBy);
+        SugarBaby newSugarBaby = new SugarBaby(idSugarBaby, nameSugarBaBy, heightOfSugarBaBy, weightOfSugarBaBy, ageSugarBaBy, priceOfSugarBaBy, datesOfSugarBaby, bustOfSugarBaBy, waistOfSugarBaBy, hipOfSugarBaBy);
         return newSugarBaby;
     }
 
     public static int getHumanId() {
         Scanner inputHumanId = new Scanner(System.in);
-        System.out.println("Nhập Id của mặt hàng mà bạn muốn sửa : ");
+        System.out.println("Nhập Id của mặt hàng mà bạn cần  : ");
         String humanId = inputHumanId.nextLine();
         for (int i = 0; i < humanArrayListClient.size(); i++) {
             Human human = humanArrayListClient.get(i);
@@ -292,29 +289,109 @@ public class Client {
         SugarBaby editSugarBaby = (SugarBaby) humanArrayListClient.get(index);
         return editSugarBaby;
     }
-    public static void displayPilotOn(){
-        Scanner inputDay= new Scanner(System.in);
-        int day = inputDay.nextInt();
-        Scanner inputMonth= new Scanner(System.in);
-        int month = inputMonth.nextInt();
-        Scanner inputYear= new Scanner(System.in);
-        int year = inputYear.nextInt();
-        Scanner inputDate = new Scanner(System.in);
-        int dateBook = inputDate.nextInt();
-        Scanner inputDayBook= new Scanner(System.in);
-        int dayBook = inputDayBook.nextInt();
-        Scanner inputMonthBook= new Scanner(System.in);
-        int monthBook = inputMonthBook.nextInt();
-        Scanner inputYearBook= new Scanner(System.in);
-        int yearBook = inputYearBook.nextInt();
-        LocalDate datePilotBeginOff =  LocalDate.of(year,month,day);
-        LocalDate datePilotEndOff = datePilotBeginOff.plusDays(dateBook);
-        LocalDate khachMuonBook = LocalDate.of(yearBook,monthBook,yearBook);
-        //checkSTT
-        int index =getHumanId();
-        if (khachMuonBook.isAfter(datePilotBeginOff)&&khachMuonBook.isBefore(datePilotEndOff)){
-            humanArrayListClient.get(index).setStatus("Off");
+
+    public static void displayDateOfHuman() {
+        for (int i = 0; i < humanArrayListClient.size(); i++) {
+            ArrayList<LocalDate> dates = humanArrayListClient.get(i).getDates();
+            System.out.println("Lịch của nhân viên có Id " + humanArrayListClient.get(i).getId() + " và tên " + humanArrayList.get(i).getFullName() + " =" + dates);
         }
+    }
+
+    public static void enterCustomerBook() {
+        System.out.println("Lịch của nhân viên : ");
+        displayDateOfHuman();
+        // Book lịch
+        Scanner inputDayBook = new Scanner(System.in);
+        System.out.println("Nhập ngày khách muốn book : ");
+        int dayBook = inputDayBook.nextInt();
+        Scanner inputMonthBook = new Scanner(System.in);
+        System.out.println("Nhập tháng mà khách muốn book : ");
+        int monthBook = inputMonthBook.nextInt();
+        Scanner inputYearBook = new Scanner(System.in);
+        System.out.println("Nhập năm mà khách muốn book : ");
+        int yearBook = inputYearBook.nextInt();
+        Scanner inputDate = new Scanner(System.in);
+        System.out.println("Nhập số  ngày khách muốn book lịch");
+        int dateBook = inputDate.nextInt();
+        LocalDate khachMuonBook = LocalDate.of(yearBook, monthBook, dayBook);
+        ArrayList<LocalDate> lichBook = new ArrayList<>();
+        int index = getHumanId();
+        if ((humanArrayListClient.get(index).getDates()).size() == 0) {
+            for (int k = dateBook; k > 0; k--) {
+                lichBook.add(khachMuonBook.plusDays(dateBook - k));
+            }
+        } else {
+            for (int j = 0; j < humanArrayListClient.get(index).getDates().size(); j++) {
+                for (int k = dateBook; k > 0; k--) {
+                    if (humanArrayListClient.get(index).getDates().get(j).isEqual(khachMuonBook.plusDays(dateBook - k))) {
+                        System.out.println("Nhân viên có Id " + humanArrayListClient.get(index).getId() + " đã có lịch trùng vào ngày " + khachMuonBook.plusDays(dateBook - k) + ". Mời bạn chọn và xem lại lịch. ");
+                        lichBook = new ArrayList<>();
+                        break;
+                    } else if (lichBook.size() < dateBook) {
+                        lichBook.add(khachMuonBook.plusDays(dateBook - k));
+                    }
+                }
+            }
+        }
+        for (int j = humanArrayListClient.get(index).getDates().size() - 1; j >= 0; j--) {
+            for (int k = dateBook; k > 0; k--) {
+                if (humanArrayListClient.get(index).getDates().get(j).isEqual(khachMuonBook.plusDays(dateBook - k))) {
+                    lichBook = new ArrayList<>();
+                    break;
+                }
+            }
+        }
+        if (lichBook.size() > 0) {
+            System.out.println("Bạn đã book lịch thành công");
+            humanArrayListClient.get(index).getDates().addAll(lichBook);
+        }
+    }
+
+    public static void displaySalaryById() {
+
+        Scanner inputYear = new Scanner(System.in);
+        System.out.println("Nhập năm mà bạn muốn tính lương : ");
+        int year = inputYear.nextInt();
+
+        Scanner inputMonth = new Scanner(System.in);
+        System.out.println("Nhập tháng mà bạn muốn tính lương : ");
+        int month = inputMonth.nextInt();
+
+        int index = getHumanId();
+        int countDateSalary = 0;
+        for (int i = 0; i < humanArrayListClient.get(index).getDates().size(); i++) {
+            if (humanArrayListClient.get(index).getDates().get(i).getMonth().getValue() == month && humanArrayListClient.get(index).getDates().get(i).getYear() == year) {
+                countDateSalary += 1;
+            }
+        }
+        double salaryOfHuman = humanArrayListClient.get(index).getPrice() * countDateSalary * 0.5;
+        System.out.println("Lương tháng " + month+"/"+year + " của nhân viên " + humanArrayListClient.get(index).getFullName() + "là : " + salaryOfHuman);
+    }
+
+    public static void displayProfit() {
+
+        Scanner inputYear = new Scanner(System.in);
+        System.out.println("Nhập năm mà bạn muốn tính lợi nhuận : ");
+        int year = inputYear.nextInt();
+
+        Scanner inputMonth = new Scanner(System.in);
+        System.out.println("Nhập tháng mà bạn muốn tính lợi nhuận : ");
+        int month = inputMonth.nextInt();
+
+        int countDateProfit = 0;
+
+        double profitOfMonth = 0;
+        for (int i = 0; i < humanArrayListClient.size(); i++) {
+            for (int j = 0; j < humanArrayListClient.get(i).getDates().size(); j++) {
+                if (humanArrayListClient.get(i).getDates().get(j).getMonth().getValue() == month && humanArrayListClient.get(i).getDates().get(j).getYear() == year) {
+                    countDateProfit += 1;
+                }
+            }
+            profitOfMonth = countDateProfit * humanArrayListClient.get(i).getPrice() * countDateProfit * 0.5;
+        }
+
+        System.out.println("Lợi nhuận của tháng " + month + "/" + year + " là : " + profitOfMonth);
+
     }
 
     public static void showMenu() {
@@ -322,13 +399,14 @@ public class Client {
         Scanner inputChoice = new Scanner(System.in);
         while (choice != 0) {
             System.out.println("Menu");
-            System.out.println("1. Hiển thị danh sách thức ăn");
+            System.out.println("1. Hiển thị danh sách nhân viên");
             System.out.println("2. Thêm Pilot ");
             System.out.println("3. Thêm SGBB");
             System.out.println("4. Sửa thông tin hàng theo Id ");
             System.out.println("5. Xóa hàng theo Id");
-            System.out.println("6. Sắp xếp nhân viên toàn thời gian theo số lương tăng dần");
-            System.out.println("7. Sửa thông tin nhân viên theo Id");
+            System.out.println("6. Book lịch");
+            System.out.println("7. Hiển thị lương phải trả theo tháng,năm của nhân viên bằng Id");
+            System.out.println("8. Hiển thị lợi nhuận");
             System.out.println("0. Exit!");
             System.out.println("Nhập lựa chọn: ");
             choice = inputChoice.nextInt();
@@ -348,6 +426,13 @@ public class Client {
                 case 5:
                     deleteHuman();
                     break;
+                case 6:
+                    enterCustomerBook();
+                    break;
+                case 7:
+                    displaySalaryById();
+                case 8 :
+                    displayProfit();
                 case 0:
                     exitSystem();
                     break;

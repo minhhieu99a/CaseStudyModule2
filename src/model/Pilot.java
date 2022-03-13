@@ -1,5 +1,9 @@
 package model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Pilot extends Human{
     public String nationnality;
 
@@ -7,8 +11,8 @@ public class Pilot extends Human{
     public Pilot() {
     }
 
-    public Pilot(String id, String fullname, Double height, Double weight, int age, Double price, String status, String nationnality) {
-        super(id, fullname, height, weight, age, price, status);
+    public Pilot(String id, String fullName, Double height, Double weight, int age, Double price, ArrayList<LocalDate> dates, String nationnality) {
+        super(id, fullName, height, weight, age, price, dates);
         this.nationnality = nationnality;
     }
 
@@ -30,8 +34,7 @@ public class Pilot extends Human{
                 ", Weight=" + getWeight() +
                 ", Age=" + getAge() +
                 ", Price=" + getPrice() +
-                ", Status='" + getStatus() +
-                "Nationnality='" + nationnality + '\'' +
+                ", Nationnality='" + nationnality + '\'' +
                 '}';
     }
 }

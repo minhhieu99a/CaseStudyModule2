@@ -1,15 +1,18 @@
 package model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 public class SugarBaby extends Human{
     public double bust;
     public double waist;
     public double hip;
-
     public SugarBaby() {
     }
 
-    public SugarBaby(String id, String fullname, Double height, Double weight, int age, Double price, String status, double bust, double waist, double hip) {
-        super(id, fullname, height, weight, age, price, status);
+    public SugarBaby(String id, String fullName, Double height, Double weight, int age, Double price, ArrayList<LocalDate> dates, double bust, double waist, double hip) {
+        super(id, fullName, height, weight, age, price, dates);
         this.bust = bust;
         this.waist = waist;
         this.hip = hip;
@@ -48,8 +51,7 @@ public class SugarBaby extends Human{
                 ", Weight=" + getWeight() +
                 ", Age=" + getAge() +
                 ", Price=" + getPrice() +
-                ", Status='" + getStatus() +
-                "Bust=" + bust +
+                ", Bust=" + bust +
                 ", Waist=" + waist +
                 ", Hip=" + hip +
                 '}';

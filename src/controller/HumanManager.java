@@ -16,6 +16,8 @@ public class HumanManager {
     private static IHumanData humanData = new HumanFromFileBinary();
     public static ArrayList<Human> humanArrayList = humanData.readFile();
 
+
+
     public static void displayHuman() {
         for (Human e : humanArrayList
         ) {
@@ -65,13 +67,6 @@ public class HumanManager {
             humanData.writeFile(humanArrayList);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-    public static void bookTour(){
-        int index = getHumanId();
-        if (humanArrayList.get(index)instanceof Pilot){
-            Pilot pilot = (Pilot) humanArrayList.get(index);
-            if (LocalDate.of(year,month,day))
         }
     }
 }
