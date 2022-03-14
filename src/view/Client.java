@@ -25,7 +25,7 @@ public class Client {
         String idPilot = inputIdPilot.nextLine();
 
         for (int i = 0; i < humanArrayListClient.size(); i++) {
-            if (humanArrayListClient.get(i).getId().equals(idPilot)){
+            if (humanArrayListClient.get(i).getId().equals(idPilot)) {
                 System.out.println("Id bạn nhập vào bị trùng . Mời bạn nhập lại. ");
                 Pilot newPilot = creatNewPilot();
                 return newPilot;
@@ -68,9 +68,9 @@ public class Client {
         String idSugarBaby = inputIdSugarBaBy.nextLine();
 
         for (int i = 0; i < humanArrayListClient.size(); i++) {
-            if (humanArrayListClient.get(i).getId()==idSugarBaby){
-               SugarBaby newSugarBaby =  creatNewSugarBaby();
-               return newSugarBaby;
+            if (humanArrayListClient.get(i).getId() == idSugarBaby) {
+                SugarBaby newSugarBaby = creatNewSugarBaby();
+                return newSugarBaby;
             }
         }
 
@@ -145,6 +145,13 @@ public class Client {
                     Scanner inputEditId = new Scanner(System.in);
                     System.out.println("Nhập Id mà bạn muốn sửa : ");
                     String newId = inputEditId.nextLine();
+                    for (int i = 0; i < humanArrayListClient.size(); i++) {
+                        if (humanArrayListClient.get(i).getId().equals(newId)) {
+                            System.out.println("Id bạn nhập vào bị trùng . Mời bạn nhập lại. ");
+                            Pilot editPilot1 = editPilot(index);
+                            return editPilot1;
+                        }
+                    }
                     humanArrayListClient.get(index).setId(newId);
                     break;
                 case 2:
@@ -214,6 +221,13 @@ public class Client {
                     Scanner inputEditId = new Scanner(System.in);
                     System.out.println("Nhập Id mà bạn muốn sửa : ");
                     String newId = inputEditId.nextLine();
+                    for (int i = 0; i < humanArrayListClient.size(); i++) {
+                        if (humanArrayListClient.get(i).getId().equals(newId)) {
+                            System.out.println("Id bạn nhập vào bị trùng . Mời bạn nhập lại. ");
+                            SugarBaby editSugarBaby = editSugarBaby(index);
+                            return editSugarBaby;
+                        }
+                    }
                     humanArrayListClient.get(index).setId(newId);
                     break;
                 case 2:
@@ -349,7 +363,7 @@ public class Client {
             }
         }
         double salaryOfHuman = humanArrayListClient.get(index).getPrice() * countDateSalary * 0.5;
-        System.out.println("Lương tháng " + month+"/"+year + " của nhân viên " + humanArrayListClient.get(index).getFullName() + "là : " + salaryOfHuman);
+        System.out.println("Lương tháng " + month + "/" + year + " của nhân viên " + humanArrayListClient.get(index).getFullName() + "là : " + salaryOfHuman);
     }
 
     public static void displayProfit() {
@@ -377,11 +391,36 @@ public class Client {
         System.out.println("Lợi nhuận của tháng " + month + "/" + year + " là : " + profitOfMonth);
 
     }
-public static void sortHumanWithSalary (){
+
+    public static void sortHumanWithSalary() {
         ArrayList<Human> newHumanArrayList = humanArrayListClient;
-        newHumanArrayList.sort(((o1, o2) -> (int) (o1.getPrice()- o2.getPrice())));
-    display(newHumanArrayList);
-}
+        newHumanArrayList.sort(((o1, o2) -> (int) (o1.getPrice() - o2.getPrice())));
+        display(newHumanArrayList);
+    }
+
+    public static void cancelBook() {
+        int index = getHumanId();
+
+        Scanner inputMonth =new Scanner(System.in);
+        System.out.println("Nhập tháng mà bạn muốn chọn :  ");
+        int month = inputMonth.nextInt();
+
+        Scanner inputDate =new Scanner(System.in);
+        System.out.println("Nhập số ngày mà bạn muốn hủy : ");
+        int date = inputDate.nextInt();
+
+        for (int i = 0; i < date; i++) {
+            Scanner inputDay= new Scanner(System.in);
+            System.out.println("Nhập ngày mà bạn muốn hủy lịch : ");
+            int day = inputDay.nextInt();
+            for (int j = 0; j < humanArrayListClient.get(index).getDates().size(); j++) {
+                if (humanArrayListClient.get(index).getDates().get(j).getMonth().getValue()==month && humanArrayListClient.get(index).getDates().get(j).getDayOfMonth()==day){
+                    humanArrayListClient.get(index).getDates().remove(j);
+                }
+            }
+        }
+
+    }
 
     public static void showMenu() {
         int choice = -1;
@@ -391,12 +430,14 @@ public static void sortHumanWithSalary (){
             System.out.println("1. Hiển thị danh sách nhân viên");
             System.out.println("2. Thêm Pilot ");
             System.out.println("3. Thêm SGBB");
-            System.out.println("4. Sửa thông tin hàng theo Id ");
-            System.out.println("5. Xóa hàng theo Id");
-            System.out.println("6. Book lịch");
-            System.out.println("7. Hiển thị lương phải trả theo tháng,năm của nhân viên bằng Id");
-            System.out.println("8. Hiển thị lợi nhuận");
-            System.out.println("9. Sắp xếp nhân viên theo giá tăng dần");
+            System.out.println("4. Sửa thông tin nhân viên theo Id ");
+            System.out.println("5. Xóa nhân viên theo Id");
+            System.out.println("6. Hiển thị lịch nhân viên");
+            System.out.println("7. Book lịch");
+            System.out.println("8. Hủy hoặc giảm lịch Book");
+            System.out.println("9. Hiển thị lương phải trả theo tháng,năm của nhân viên bằng Id");
+            System.out.println("10. Hiển thị lợi nhuận");
+            System.out.println("11. Sắp xếp nhân viên theo giá tăng dần");
             System.out.println("0. Exit!");
             System.out.println("Nhập lựa chọn: ");
             choice = inputChoice.nextInt();
@@ -417,15 +458,21 @@ public static void sortHumanWithSalary (){
                     deleteHuman();
                     break;
                 case 6:
-                    enterCustomerBook();
+                    displayDateOfHuman();
                     break;
                 case 7:
+                    enterCustomerBook();
+                    break;
+                case 8:
+                    cancelBook();
+                    break;
+                case 9:
                     displaySalaryById();
                     break;
-                case 8 :
+                case 10 :
                     displayProfit();
                     break;
-                case 9 :
+                case 11:
                     sortHumanWithSalary();
                     break;
                 case 0:
